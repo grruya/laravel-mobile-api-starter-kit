@@ -3,7 +3,7 @@ name: laravel-best-practices
 description: "Apply this skill whenever writing, reviewing, or refactoring Laravel PHP code. This includes creating or modifying controllers, models, migrations, form requests, policies, jobs, scheduled commands, service classes, and Eloquent queries. Triggers for N+1 and query performance issues, caching strategies, authorization and security patterns, validation, error handling, queue and job configuration, route definitions, and architectural decisions. Also use for Laravel code reviews and refactoring existing Laravel code to follow best practices. Covers any task involving Laravel backend PHP code patterns."
 license: MIT
 metadata:
-    author: laravel
+  author: laravel
 ---
 
 # Laravel Best Practices
@@ -30,8 +30,6 @@ Check sibling files, related controllers, models, or tests for established patte
 - Never query in Blade templates
 
 ### 2. Advanced Query Patterns → `rules/advanced-queries.md`
-
-- Place complex queries in `app/Queries` (e.g., `UserListQuery`) and return an Eloquent Builder the controller can chain.
 
 - `addSelect()` subqueries over eager-loading entire has-many for a single value
 - Dynamic relationships via subquery FK + `belongsTo`
@@ -63,8 +61,6 @@ Check sibling files, related controllers, models, or tests for established patte
 
 ### 5. Eloquent Patterns → `rules/eloquent.md`
 
-- Document every column with `@property` in PHPDoc for full static analysis coverage.
-
 - Correct relationship types with return type hints
 - Local scopes for reusable query constraints
 - Global scopes sparingly — document their existence
@@ -75,14 +71,11 @@ Check sibling files, related controllers, models, or tests for established patte
 
 ### 6. Validation & Forms → `rules/validation.md`
 
-- Use the `after` callback in Form Requests for validation checks that rely on the database or other post-basic-rule logic
 - Form Request classes, not inline validation
 - Array notation `['required', 'email']` for new code; follow existing convention
 - `$request->validated()` only — never `$request->all()`
 - `Rule::when()` for conditional validation
-
-- Apply sensible min and max rules on strings (e.g., `min:3` for a name).
-- Prefer `#[CurrentUser] User $user` injection over `$request->user()`.
+- `after()` instead of `withValidator()`
 
 ### 7. Configuration → `rules/config.md`
 
@@ -100,10 +93,6 @@ Check sibling files, related controllers, models, or tests for established patte
 
 ### 9. Queue & Job Patterns → `rules/queue-jobs.md`
 
-- Keep the job `$tries` value low; one is enough in most cases.
-- Pass serializable arguments such as a user id instead of heavy objects.
-- Use the `DeleteWhenMissingModels` trait when the job references a model that might be deleted.
-
 - `retry_after` must exceed job `timeout`; use exponential backoff `[1, 5, 10]`
 - `ShouldBeUnique` to prevent duplicates; `ShouldBeUniqueUntilProcessing` for early lock release
 - Always implement `failed()`; with `retryUntil()`, set `$tries = 0`
@@ -112,13 +101,10 @@ Check sibling files, related controllers, models, or tests for established patte
 
 ### 10. Routing & Controllers → `rules/routing.md`
 
-- A controller should only hold CRUD actions: `index`, `store`, `show`, `update`, `destroy`.
-- Use a single-purpose invocable controller for anything else (e.g., `UserExportController`).
-- Do not add private methods, business logic, or validation in controllers; delegate to Action classes and FormRequests.
-
 - Implicit route model binding
 - Scoped bindings for nested resources
 - `Route::resource()` or `apiResource()`
+- Methods under 10 lines — extract to actions/services
 - Type-hint Form Requests for auto-validation
 
 ### 11. HTTP Client → `rules/http-client.md`
@@ -159,20 +145,12 @@ Check sibling files, related controllers, models, or tests for established patte
 
 ### 15. Architecture → `rules/architecture.md`
 
-- Single-purpose Action classes; Make each action `final readonly` with a single public `handle()` and keep other methods `private`.
-- Start the class name with a verb (e.g., `CreateOrder`, `ProcessPayment`).
-- Keep actions free of HTTP and session so any entry point can call them.
-- Wrap multi-step database changes in `DB::transaction`, but expect pain on very large tables (e.g., history).
-
-- Dependency injection over `app()` helper
+- Single-purpose Action classes; dependency injection over `app()` helper
 - Prefer official Laravel packages and follow conventions, don't override defaults
 - Default to `ORDER BY id DESC` or `created_at DESC`; `mb_*` for UTF-8 safety
 - `defer()` for post-response work; `Context` for request-scoped data; `Concurrency::run()` for parallel execution
 
 ### 16. Migrations → `rules/migrations.md`
-
-- Avoid `onDelete('cascade')` in migrations and perform deletes in application code for clearer side effects.
-- Avoid database defaults in migrations; set defaults inside Actions.
 
 - Generate migrations with `php artisan make:migration`
 - `constrained()` for foreign keys
@@ -202,11 +180,6 @@ Check sibling files, related controllers, models, or tests for established patte
 - Prefer Laravel helpers (`Str`, `Arr`, `Number`, `Uri`, `Str::of()`, `$request->string()`) over raw PHP functions
 - No JS/CSS in Blade, no HTML in PHP classes
 - Code should be readable; comments only for config files
-
-## 20. File System and Atomic Operations
-
-- If file operations must track a database transaction, commit the database work first and queue the file work.
-- Call `deleteFileAfterSend()` on temporary download files so they are removed after the response finishes.
 
 ## How to Apply
 
