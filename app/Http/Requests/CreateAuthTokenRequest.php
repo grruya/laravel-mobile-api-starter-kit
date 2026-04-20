@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\DeviceValidationRules;
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,6 +14,8 @@ use Illuminate\Validation\ValidationException;
 
 final class CreateAuthTokenRequest extends FormRequest
 {
+    use DeviceValidationRules;
+
     /**
      * @return array<string, array<int, string>>
      */
@@ -21,7 +24,7 @@ final class CreateAuthTokenRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            'device_name' => ['required', 'string', 'min:1', 'max:255'],
+            'device_name' => $this->deviceNameRules(),
         ];
     }
 

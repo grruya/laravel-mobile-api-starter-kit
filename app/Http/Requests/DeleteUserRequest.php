@@ -7,18 +7,17 @@ namespace App\Http\Requests;
 use App\Http\Requests\Concerns\PasswordValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
-final class UpdateUserPasswordRequest extends FormRequest
+final class DeleteUserRequest extends FormRequest
 {
     use PasswordValidationRules;
 
     /**
-     * @return array<string, array<int, mixed>>
+     * @return array<string, array<int, string>>
      */
     public function rules(): array
     {
         return [
-            'current_password' => $this->currentPasswordRules(),
-            'password' => $this->passwordRules(),
+            'password' => $this->currentPasswordRules(),
         ];
     }
 }

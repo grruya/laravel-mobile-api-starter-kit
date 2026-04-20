@@ -6,20 +6,18 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Actions\IssueOneTimePassword;
 use App\Enums\OneTimePasswordPurpose;
+use App\Http\Requests\SendEmailVerificationCodeRequest;
 use App\Models\User;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Request;
 
 final readonly class UserSendEmailVerificationCodeController
 {
     public function __invoke(
-        Request $request,
+        SendEmailVerificationCodeRequest $request,
         #[CurrentUser] User $user,
         IssueOneTimePassword $issueOneTimePassword,
     ): JsonResponse {
-        $request->validate(['device_id' => ['required', 'string', 'min:1', 'max:255']]);
-
         if ($user->hasVerifiedEmail()) {
             return response()->json([
                 'message' => 'Email already verified',

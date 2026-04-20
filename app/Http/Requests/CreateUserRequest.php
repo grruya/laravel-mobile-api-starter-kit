@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\DeviceValidationRules;
+use App\Http\Requests\Concerns\PasswordValidationRules;
 use App\Models\User;
 use App\Rules\ValidEmail;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 final class CreateUserRequest extends FormRequest
 {
+    use DeviceValidationRules;
+    use PasswordValidationRules;
+
     /**
      * @return array<string, array<mixed>|string>
      */
@@ -29,11 +33,9 @@ final class CreateUserRequest extends FormRequest
                 Rule::unique(User::class),
             ],
             'password' => [
-                'required',
-                'confirmed',
-                Password::defaults(),
+                ...$this->passwordRules(),
             ],
-            'device_name' => ['required', 'string', 'min:1', 'max:255'],
+            'device_name' => $this->deviceNameRules(),
         ];
     }
 }

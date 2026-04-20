@@ -25,7 +25,7 @@ final readonly class ConsumeOneTimePassword
         #[SensitiveParameter] string $deviceId,
     ): void {
         $exception = $this->timebox->call(
-            fn(Timebox $timebox): ?OneTimePasswordException => DB::transaction(function () use ($user, $purpose, $code, $deviceId, $timebox): ?OneTimePasswordException {
+            fn (Timebox $timebox): ?OneTimePasswordException => DB::transaction(function () use ($user, $purpose, $code, $deviceId, $timebox): ?OneTimePasswordException {
                 User::query()
                     ->whereKey($user->id)
                     ->lockForUpdate()

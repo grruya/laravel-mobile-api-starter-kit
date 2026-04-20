@@ -8,12 +8,12 @@ use App\Actions\CreateUser;
 use App\Actions\DeleteUser;
 use App\Actions\UpdateUser;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\DeleteUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\AuthenticatedUserResource;
 use App\Models\User;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 final readonly class UserController
@@ -40,10 +40,8 @@ final readonly class UserController
         return $user->toResource();
     }
 
-    public function destroy(Request $request, #[CurrentUser] User $user, DeleteUser $deleteUser): JsonResponse
+    public function destroy(DeleteUserRequest $request, #[CurrentUser] User $user, DeleteUser $deleteUser): JsonResponse
     {
-        $request->validate(['password' => ['required', 'current_password:sanctum']]);
-
         $user->currentAccessToken()->delete();
         $deleteUser->handle($user);
 

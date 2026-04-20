@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\DeviceValidationRules;
+use App\Http\Requests\Concerns\OneTimePasswordValidationRules;
+use App\Http\Requests\Concerns\PasswordValidationRules;
 use App\Models\User;
 use App\Rules\ValidEmail;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Validator;
 use LogicException;
 
 final class CreateUserPasswordRequest extends FormRequest
 {
+    use DeviceValidationRules;
+    use OneTimePasswordValidationRules;
+    use PasswordValidationRules;
+
     private ?User $passwordResetUser = null;
 
     /**
@@ -22,10 +28,10 @@ final class CreateUserPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'digits:6'],
-            'device_id' => ['required', 'string', 'min:1', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', new ValidEmail],
-            'password' => ['required', 'confirmed', Password::defaults()],
+            'code' => $this->oneTimePasswordCodeRules(),
+            'device_id' => $this->deviceIdRules(),
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', new ValidEmail],
+            'password' => $this->passwordRules(),
         ];
     }
 
