@@ -27,6 +27,7 @@ final readonly class UserController
         $user = $createUser->handle(
             $attributes,
             $request->string('password')->value(),
+            $request->string('device_id')->value(),
         );
 
         $token = $issueAuthToken->handle(
