@@ -61,7 +61,7 @@
         "lint": "pint --parallel",
         "test:refactor": "rector --dry-run",
         "test:lint": "pint --parallel --test",
-        "test:types": "phpstan analyse --ansi",
+        "test:types": "phpstan analyse --ansi --memory-limit=512M",
         "test:unit": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
