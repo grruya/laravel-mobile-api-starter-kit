@@ -1,18 +1,18 @@
 # Laravel Mobile API Starter Kit
 
-Minimal type safe starter kit for mobile-first apps with OTP and action pattern.
+Minimal **type-safe** starter kit for mobile-first apps with OTP and action pattern.
 
 ## Why use it?
 
-- OTP over magic link for better mobile UX
+- OTP over signed link for better mobile UX
 - Versioned API routes
 - Action pattern
-- Cruddy controllers
-- Type safe with PHPStan level max
+- CRUD controllers
+- Type-safe with PHPStan **at max level**
 - Consistency and refactoring with Rector and Pint
-- AI ready with **[Laravel Boost](https://github.com/laravel/boost)**
+- AI-ready with **[Laravel Boost](https://github.com/laravel/boost)**
 - Better defaults, thanks to **[Essentials](https://github.com/nunomaduro/essentials)**
-- Feature, unit and architecture tests
+- Feature, unit, and architecture tests
 
 ## Getting Started
 
@@ -70,12 +70,12 @@ That runs Rector check, Pint check, PHPStan, and the Laravel test suite.
 
 ## Similar recommended kits
 
-All this kits have PHPStan level max with pint and rector
+All **these** kits have PHPStan **at max level**, with Pint and Rector.
 
-- **[Laravel API Kit](https://github.com/Grazulex/laravel-api-kit)**: Spatie oriented with different pattern
-- **[Laravel Inertia & React](https://github.com/nunomaduro/laravel-starter-kit-inertia-react)**: Web only with similar patter
-- **[Laravel Inertia & Vue](https://github.com/nunomaduro/laravel-starter-kit-inertia-react)**: Web only with similar patter
-- **[Laravel Blade](https://github.com/nunomaduro/laravel-starter-kit-inertia-react)**: Web only with similar patter
+- **[Laravel API Kit](https://github.com/Grazulex/laravel-api-kit)**: Spatie-oriented with a different pattern
+- **[Laravel Inertia & React](https://github.com/nunomaduro/laravel-starter-kit-inertia-react)**: Web-only with a similar **pattern**
+- **[Laravel Inertia & Vue](https://github.com/nunomaduro/laravel-starter-kit-inertia-react)**: Web-only with a similar **pattern**
+- **[Laravel Blade](https://github.com/nunomaduro/laravel-starter-kit-inertia-react)**: Web-only with a similar **pattern**
 
 ## License
 
