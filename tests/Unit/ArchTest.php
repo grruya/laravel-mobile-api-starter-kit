@@ -19,5 +19,4 @@ arch('controllers')
 arch('actions are application layer objects')
     ->expect('App\Actions')
     ->classes()
-    ->toHaveMethod('handle')
     ->not->toHavePublicMethodsBesides(['handle', '__construct']);

@@ -72,6 +72,12 @@
             "@test:types",
             "@test:unit"
         ],
+        "test:apply": [
+            "@refactor",
+            "@lint",
+            "@test:types",
+            "@test:unit"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

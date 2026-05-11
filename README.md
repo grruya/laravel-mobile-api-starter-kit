@@ -33,6 +33,7 @@ Move in and set it up:
 ```bash
 cd example-app
 composer setup
+php artisan boost:install
 ```
 
 Start local dev:
@@ -67,6 +68,7 @@ That runs Rector check, Pint check, PHPStan, and the Laravel test suite.
 - `composer test:types` - Runs PHPStan/Larastan
 - `composer test:unit` - Clears Laravel config and runs tests
 - `composer test` - Runs all checks above
+- `composer test:apply` - Same as above just applies Pint and Rector changes
 
 ## Similar recommended kits
 
